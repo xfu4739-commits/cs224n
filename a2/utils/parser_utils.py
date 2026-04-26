@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 CS224N 2021-2022: Homework 3
-parser_utils.py: Utilities for training the dependency parser.
+parser_utils.py: 依存句法分析器训练相关工具
 Sahil Chopra <schopra8@stanford.edu>
 """
 
@@ -40,14 +40,14 @@ class Config(object):
 
 
 class Parser(object):
-    """Contains everything needed for transition-based dependency parsing except for the model"""
+    """包含 transition-based 依存句法分析所需的一切（除模型本身以外）"""
 
     def __init__(self, dataset):
         root_labels = list([l for ex in dataset
                            for (h, l) in zip(ex['head'], ex['label']) if h == 0])
         counter = Counter(root_labels)
         if len(counter) > 1:
-            logging.info('Warning: more than one root label')
+            logging.info('警告：出现不止一种 root label')
             logging.info(counter)
         self.root_label = counter.most_common()[0][0]
         deprel = [self.root_label] + list(set([w for ex in dataset
@@ -74,14 +74,14 @@ class Parser(object):
         self.tran2id = {t: i for (i, t) in enumerate(trans)}
         self.id2tran = {i: t for (i, t) in enumerate(trans)}
 
-        # logging.info('Build dictionary for part-of-speech tags.')
+        # logging.info('构建词性（POS）标签字典。')
         tok2id.update(build_dict([P_PREFIX + w for ex in dataset for w in ex['pos']],
                                   offset=len(tok2id)))
         tok2id[P_PREFIX + UNK] = self.P_UNK = len(tok2id)
         tok2id[P_PREFIX + NULL] = self.P_NULL = len(tok2id)
         tok2id[P_PREFIX + ROOT] = self.P_ROOT = len(tok2id)
 
-        # logging.info('Build dictionary for words.')
+        # logging.info('构建词表（word）字典。')
         tok2id.update(build_dict([w for ex in dataset for w in ex['word']],
                                   offset=len(tok2id)))
         tok2id[UNK] = self.UNK = len(tok2id)
@@ -350,7 +350,7 @@ def minibatches(data, batch_size):
 def load_and_preprocess_data(reduced=True):
     config = Config()
 
-    print("Loading data...",)
+    print("加载数据...",)
     start = time.time()
     train_set = read_conll(os.path.join(config.data_path, config.train_file),
                            lowercase=config.lowercase)
@@ -362,14 +362,14 @@ def load_and_preprocess_data(reduced=True):
         train_set = train_set[:1000]
         dev_set = dev_set[:500]
         test_set = test_set[:500]
-    print("took {:.2f} seconds".format(time.time() - start))
+    print("耗时 {:.2f} 秒".format(time.time() - start))
 
-    print("Building parser...",)
+    print("构建解析器（parser）...",)
     start = time.time()
     parser = Parser(train_set)
-    print("took {:.2f} seconds".format(time.time() - start))
+    print("耗时 {:.2f} 秒".format(time.time() - start))
 
-    print("Loading pretrained embeddings...",)
+    print("加载预训练词向量...",)
     start = time.time()
     word_vectors = {}
     for line in open(config.embedding_file).readlines():
@@ -383,25 +383,25 @@ def load_and_preprocess_data(reduced=True):
             embeddings_matrix[i] = word_vectors[token]
         elif token.lower() in word_vectors:
             embeddings_matrix[i] = word_vectors[token.lower()]
-    print("took {:.2f} seconds".format(time.time() - start))
+    print("耗时 {:.2f} 秒".format(time.time() - start))
 
-    print("Vectorizing data...",)
+    print("向量化数据...",)
     start = time.time()
     train_set = parser.vectorize(train_set)
     dev_set = parser.vectorize(dev_set)
     test_set = parser.vectorize(test_set)
-    print("took {:.2f} seconds".format(time.time() - start))
+    print("耗时 {:.2f} 秒".format(time.time() - start))
 
-    print("Preprocessing training data...",)
+    print("预处理训练数据...",)
     start = time.time()
     train_examples = parser.create_instances(train_set)
-    print("took {:.2f} seconds".format(time.time() - start))
+    print("耗时 {:.2f} 秒".format(time.time() - start))
 
     return parser, embeddings_matrix, train_examples, dev_set, test_set,
 
 
 class AverageMeter(object):
-    """Computes and stores the average and current value"""
+    """用于计算并维护当前值与平均值"""
     def __init__(self):
         self.reset()
 

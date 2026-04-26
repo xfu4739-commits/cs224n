@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 CS224N 2021-2022: Homework 3
-general_utils.py: General purpose utilities.
+general_utils.py: 通用工具函数
 Sahil Chopra <schopra8@stanford.edu>
 """
 
@@ -11,29 +11,27 @@ import numpy as np
 
 def get_minibatches(data, minibatch_size, shuffle=True):
     """
-    Iterates through the provided data one minibatch at at time. You can use this function to
-    iterate through data in minibatches as follows:
+    将数据按 minibatch 迭代返回。你可以用该函数以 minibatch 的方式遍历数据，例如：
 
         for inputs_minibatch in get_minibatches(inputs, minibatch_size):
             ...
 
-    Or with multiple data sources:
+    也可以用于多个数据源同时迭代：
 
         for inputs_minibatch, labels_minibatch in get_minibatches([inputs, labels], minibatch_size):
             ...
 
     Args:
-        data: there are two possible values:
-            - a list or numpy array
-            - a list where each element is either a list or numpy array
-        minibatch_size: the maximum number of items in a minibatch
-        shuffle: whether to randomize the order of returned data
+        data: 两种形式之一：
+            - list 或 numpy array
+            - list，其中每个元素本身是 list 或 numpy array（用于多数据源）
+        minibatch_size: 每个 minibatch 最多包含的样本数
+        shuffle: 是否在返回前打乱数据顺序
     Returns:
-        minibatches: the return value depends on data:
-            - If data is a list/array it yields the next minibatch of data.
-            - If data a list of lists/arrays it returns the next minibatch of each element in the
-              list. This can be used to iterate through multiple data sources
-              (e.g., features and labels) at the same time.
+        minibatches: 返回值取决于 `data` 的形式：
+            - 如果 `data` 是 list/array，则每次 yield 一份数据的下一个 minibatch。
+            - 如果 `data` 是「list of lists/arrays」，则每次返回该 list 中每个元素的下一个 minibatch。
+              这可以用于同时遍历多个数据源（例如特征与标签）。
 
     """
     list_data = type(data) is list and (type(data[0]) is list or type(data[0]) is np.ndarray)

@@ -1,37 +1,37 @@
-Welcome to Assignment 2!
+欢迎来到作业 2！
 
-We'll be using PyTorch for this assignment. If you're not familiar with PyTorch, or if you would like to review some of the fundamentals of PyTorch, the PyTorch review session is posted on Canvas under Course Videos.  
+本次作业会使用 PyTorch。如果你对 PyTorch 不熟悉，或想复习 PyTorch 的基础内容，可以在 Canvas 的 Course Videos 下找到 PyTorch 回顾课程视频。
 
-If you want to continue using your cs224n environment from assignment 1 for this assignment, please make sure you have all the dependencies listed in local_env.yml. To do so, please run: 
+如果你想继续使用作业 1 的 `cs224n` 环境，请确认已经安装 `local_env.yml` 中列出的所有依赖。可以按下面步骤执行：
 
-# 1. Activate your old environment:
+# 1. 激活旧环境：
 
     conda activate cs224n
 
-# 2. Install docopt
+# 2. 安装 docopt
 
     conda install docopt
 
-# 3. Install pytorch, torchvision, and tqdm
+# 3. 安装 pytorch、torchvision 和 tqdm
 
     conda install pytorch torchvision -c pytorch
     conda install -c anaconda tqdm
 
 
-If you would like to instead create a new environment for this assignment, please run:
+如果你想为本次作业新建一个环境，请执行：
 
-# 1. Create an environment with dependencies specified in local_env.yml (note that this can take some time depending on your laptop):
+# 1. 按 local_env.yml 创建环境（根据电脑配置，可能需要一段时间）：
     
     conda env create -f local_env.yml
 
-# 2. Activate the new environment:
+# 2. 激活新环境：
     
     conda activate cs224n_a2
     
 
-# To deactivate an active environment, use
+# 如需退出当前激活的环境，使用：
     
     conda deactivate
 
-## No `zip` command for Windows
-If you are using Windows, you may see an error when running the `collect_submission.sh` script. This is because the `zip` command is not available by default on Windows. If you encounter this error, you can try other methods mentioned [here](https://superuser.com/questions/201371/create-zip-folder-from-the-command-line-windows). Alternatively, you can manually zip the Python files.
+## Windows 下没有 `zip` 命令
+如果你在 Windows 上运行 `collect_submission.sh` 脚本时出现报错，通常是因为 Windows 默认没有 `zip` 命令。你可以参考 [这里](https://superuser.com/questions/201371/create-zip-folder-from-the-command-line-windows) 提到的其他打包方式；或者直接手动把 Python 文件压缩成 zip 提交。
